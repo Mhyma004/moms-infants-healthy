@@ -8,6 +8,8 @@ export default SignUpPassword = (props) => {
 
     const [password, setPassword] = useState('');
     const [repeat, setRepeat] = useState('');
+
+    
     
     useEffect(() => {
         AsyncStorage.getItem('pass').then((value) => {
@@ -33,6 +35,16 @@ export default SignUpPassword = (props) => {
             props.getNextScreen();
         }
     };
+
+    const getPasswordStrength = () => {
+        if(password.length === 0) {
+            this.setState({
+                label: 'Type a password',
+                labelColor: 'black'
+            });
+        }
+    }
+
         return (
             <TouchableHighlight onPress={Keyboard.dismiss} underlayColor={"transparent"} accessible={false} style={appStyles.container}>
             <>
@@ -45,6 +57,8 @@ export default SignUpPassword = (props) => {
                         <View style={{paddingTop: appStyles.win.height * 0.1}}>
                             
                             <TextBox placeholder={translate("passwordInput")} onChangeText={setPassword} secureTextEntry={true} value= {password} style={appStyles.TextInputMask}/>
+
+                            <Text onChangeText={getPasswordStrength}>{this.state.label}</Text>
                         
                             <TextBox placeholder={translate("repeatPasswordInput")} onChangeText={setRepeat} secureTextEntry={true} value= {repeat} style={appStyles.TextInputMask}/>
                             
